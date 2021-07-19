@@ -13,7 +13,7 @@ func (s *segment) String() string {
 }
 
 func main() {
-	data := []int{10, -3, -12, 8, 42, 1, -7, 0, 8, 42, 5}
+	data := []int{10, -3, -12, 8, 42, 1, -7, 0, 3}
 	result := findClosedSubarrayWithMaxSum(data)
 	fmt.Println("Result ", result.String())
 }
