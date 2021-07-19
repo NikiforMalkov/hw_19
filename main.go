@@ -13,12 +13,11 @@ func (s *segment) String() string {
 }
 
 func main() {
-	data := []int{10, -3, -12, 8, 42, 1, -7, 0, 8, 42, 2, 5}
+	data := []int{10, -3, -12, 8, 42, 1, -7, 0, 8, 42, 5}
 	result := findClosedSubarrayWithMaxSum(data)
 	fmt.Println("Result ", result.String())
 }
 
-//findClosedSubarrayWithMaxSum если я правильно понял, тогда закрытым будет считаться элемент, который ограничен двумя другими, начало и конец не являются закрывающими.
 func findClosedSubarrayWithMaxSum(array []int) segment {
 	max := segment{
 		sum:   0,
@@ -35,9 +34,9 @@ func findClosedSubarrayWithMaxSum(array []int) segment {
 	//Чисто технически, если наша сумма уменьшилась, тогда мы нашли конец отрезка
 	for key, value := range array {
 		sum := currentSegment.sum + value
+		currentSegment.end = key - 1
 		if currentSegment.sum > sum {
-			currentSegment.end = key - 1
-			if currentSegment.sum > max.sum {
+			if sum > max.sum {
 				max = currentSegment
 			}
 			currentSegment = segment{
@@ -47,6 +46,9 @@ func findClosedSubarrayWithMaxSum(array []int) segment {
 			}
 		}
 		currentSegment.sum = sum
+	}
+	if currentSegment.sum > max.sum {
+		max = currentSegment
 	}
 	return max
 }
