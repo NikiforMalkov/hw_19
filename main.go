@@ -31,11 +31,13 @@ func findClosedSubarrayWithMaxSum(array []int) segment {
 		end:   0,
 	}
 
+	arrayLength := len(array) - 1
+
 	//Чисто технически, если наша сумма уменьшилась, тогда мы нашли конец отрезка
 	for key, value := range array {
 		sum := currentSegment.sum + value
 		currentSegment.end = key - 1
-		if currentSegment.sum > sum {
+		if currentSegment.sum > sum || arrayLength == key {
 			if sum > max.sum {
 				max = currentSegment
 			}
@@ -46,9 +48,6 @@ func findClosedSubarrayWithMaxSum(array []int) segment {
 			}
 		}
 		currentSegment.sum = sum
-	}
-	if currentSegment.sum > max.sum {
-		max = currentSegment
 	}
 	return max
 }
